@@ -1,6 +1,6 @@
 package com.brad.todoapi.models
 
-import javax.persistence.* // ktlint-disable no-wildcard-imports
+import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import java.time.LocalDateTime
 
@@ -21,7 +21,11 @@ class Todo(
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
     @Column(name = "update_at")
-    var updateAt: LocalDateTime? = null
+    var updateAt: LocalDateTime? = null,
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false) // 설정한 관계
+    @JoinColumn(name = "user_id", nullable = false) // 외래 키 설정
+    val user: Users, // Users 클래스의 인스턴스를 참조
 )
 
 enum class TodoStatus {
