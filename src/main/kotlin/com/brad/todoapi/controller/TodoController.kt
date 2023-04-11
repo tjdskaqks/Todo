@@ -3,23 +3,23 @@ package com.brad.todoapi.controller
 import com.brad.todoapi.helper.MathConstant.MIN_AVAILABLE_ID
 import com.brad.todoapi.models.*
 import com.brad.todoapi.services.TodoService
-import jakarta.validation.Valid
-import jakarta.validation.constraints.Min
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.http.*
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import javax.validation.Valid
+import javax.validation.constraints.Min
 
 @RestController
 @RequestMapping("/api/v1/todos")
 class TodoController (private val todoService: TodoService) {
 
     @PostMapping
-    suspend fun createTodo(@Valid @RequestBody todo: Todo): Todo = withContext(Dispatchers.IO) {todoService.createTodo(todo)}
+    fun createTodo(@Valid @RequestBody todo: Todo): Todo = todoService.createTodo(todo)
 
     @GetMapping
-    suspend fun getAllTodos(): List<Todo> = withContext(Dispatchers.IO) {todoService.getAllTodos() }
+    fun getAllTodos(): List<Todo> = todoService.getAllTodos()
 
     @GetMapping("/{id}")
     fun getTodoById(@PathVariable @Min(MIN_AVAILABLE_ID) id: Long): Todo =

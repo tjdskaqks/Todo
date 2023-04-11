@@ -11,9 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 @Service
 class TodoService(private val todoRepository: TodoRepository) {
-    suspend fun createTodo (todo: Todo) : Todo = withContext(Dispatchers.IO) { todoRepository.save(todo) }
+    fun createTodo (todo: Todo) : Todo = todoRepository.save(todo)
 
-    suspend fun getAllTodos(): List<Todo> = withContext(Dispatchers.IO) { todoRepository.findAll() }
+    fun getAllTodos(): List<Todo> = todoRepository.findAll()
 
     fun getTodoById(id: Long): Todo? = todoRepository.findByIdOrNull(id)
 

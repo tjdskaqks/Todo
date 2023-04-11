@@ -24,6 +24,8 @@ spring:
     user: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
     encoding: UTF-8
+    baseline-on-migrate: true
+    enabled: true
   profiles:
     config:
       activate:

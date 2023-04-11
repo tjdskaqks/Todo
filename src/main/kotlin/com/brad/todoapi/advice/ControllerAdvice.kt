@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException
 class ControllerAdvice {
     @ExceptionHandler(ResponseStatusException::class)
     fun handleResponseStatusException(e: ResponseStatusException): ResponseEntity<com.brad.todoapi.exception.ErrorResponse> {
-        val errorResponse = com.brad.todoapi.exception.ErrorResponse(e.statusCode.value(), e.reason ?: "An error occurred.")
-        return ResponseEntity(errorResponse, e.statusCode)
+        val errorResponse = com.brad.todoapi.exception.ErrorResponse(e.status.value(), e.reason ?: "An error occurred.")
+        return ResponseEntity(errorResponse, e.status)
     }
 }

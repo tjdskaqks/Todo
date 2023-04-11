@@ -1,7 +1,7 @@
 package com.brad.todoapi.models
 
-import jakarta.persistence.* // ktlint-disable no-wildcard-imports
-import jakarta.validation.constraints.NotBlank
+import javax.persistence.* // ktlint-disable no-wildcard-imports
+import javax.validation.constraints.NotBlank
 import java.time.LocalDateTime
 
 @Entity
