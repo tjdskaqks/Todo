@@ -15,13 +15,13 @@ class Todo(
     @Column
     var content: String? = null,
     @Enumerated(EnumType.STRING)
-    var status : TodoStatus = TodoStatus.INCOMPLETE,
+    var status: TodoStatus = TodoStatus.INCOMPLETE,
     @Column(name = "complete_at")
-    var completeAt : LocalDateTime? = null,
+    var completeAt: LocalDateTime? = null,
     @Column(name = "created_at")
-    val createdAt : LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime = LocalDateTime.now(),
     @Column(name = "update_at")
-    var updateAt : LocalDateTime? = null
+    var updateAt: LocalDateTime? = null
 )
 
 enum class TodoStatus {
