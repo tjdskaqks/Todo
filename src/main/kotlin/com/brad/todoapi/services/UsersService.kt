@@ -6,13 +6,14 @@ import com.brad.todoapi.models.Users
 import com.brad.todoapi.repository.UsersRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import javax.validation.constraints.Min
 
 @Service
 class UsersService(private val usersRepository: UsersRepository) {
 
     fun createUser(user: Users): Users? {
-        val existingUser = getUserByUsername(user.username) ?: return usersRepository.save(user)
+        getUserByUsername(user.username) ?: return usersRepository.save(user)
         return null
     }
 
@@ -27,13 +28,21 @@ class UsersService(private val usersRepository: UsersRepository) {
     fun updateUserById(@Min(MathConstant.MIN_AVAILABLE_ID) id: Long, updatedUser: Users): Users? {
         val existingUser = getUserById(id) ?: return null
 
+        if (updatedUser.username != existingUser.username) {
+            usersRepository.findByUsername(updatedUser.username)?.let {
+                throw IllegalArgumentException("Username already exists")
+            }
+        }
+
         existingUser.apply {
-            username = updatedUser.username.takeIf { it != username } ?: username
+            username = updatedUser.username
             role = updatedUser.role.takeIf { it != role } ?: role
+            updateAt = LocalDateTime.now()
         }
 
         return usersRepository.save(existingUser)
     }
+
 
     fun deleteUserById(@Min(MathConstant.MIN_AVAILABLE_ID) id: Long) = usersRepository.deleteById(id)
 }

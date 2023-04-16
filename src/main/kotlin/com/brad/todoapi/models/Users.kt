@@ -17,9 +17,9 @@ class Users (
     @Enumerated(EnumType.STRING)
     var role: UserRoles = UserRoles.USER,
     @Column
-    val createAt: LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime = LocalDateTime.now(),
     @Column
-    val updateAt: LocalDateTime? = null,
+    var updateAt: LocalDateTime? = null,
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     val todos: MutableList<Todo> = mutableListOf()
 )

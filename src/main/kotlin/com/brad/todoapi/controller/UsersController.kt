@@ -26,15 +26,22 @@ class UsersController(private val usersService: UsersService) {
     fun getAllUsers() = usersService.getAllUsers()
 
     @GetMapping("/{id}")
-    fun getUserById(@Min(MathConstant.MIN_AVAILABLE_ID) @RequestParam id: Long) : Users? = usersService.getUserById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+    fun getUserById(@Min(MathConstant.MIN_AVAILABLE_ID) @PathVariable id: Long) : Users? = usersService.getUserById(id) ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
 
     @GetMapping("/role/{role}")
     fun getUsersByRole(@PathVariable role: UserRoles): List<Users> = usersService.getUsersByRole(role)
 
-    @DeleteMapping
-    fun deleteUserById(@Min(MathConstant.MIN_AVAILABLE_ID) @RequestParam id: Long) = usersService.deleteUserById(id)
+    @DeleteMapping("/{id}")
+    fun deleteUserById(@Min(MathConstant.MIN_AVAILABLE_ID) @PathVariable id: Long) = usersService.deleteUserById(id)
 
     @PutMapping("/{id}")
-    fun updateUserById(@Min(MathConstant.MIN_AVAILABLE_ID)  @RequestParam id: Long, @RequestParam updatedUser: Users)
-            = usersService.updateUserById(id, updatedUser)
+    fun updateUserById(@Min(MathConstant.MIN_AVAILABLE_ID)  @PathVariable id: Long, @RequestBody updatedUser: Users) : Users?
+    {
+        try {
+            return usersService.updateUserById(id, updatedUser);
+        }catch (Ilae: IllegalArgumentException)
+        {
+            throw ResponseStatusException(HttpStatus.CONFLICT, "User already exists")
+        }
+    }
 }
