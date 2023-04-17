@@ -24,8 +24,8 @@ class Todo(
     var updateAt: LocalDateTime? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false) // 설정한 관계
-    @JoinColumn(name = "user_id", nullable = false) // 외래 키 설정
-    val user: Users, // Users 클래스의 인스턴스를 참조
+    @JoinColumn(name = "user_id", nullable = true) // 외래 키 설정
+    var user: Users, // Users 클래스의 인스턴스를 참조
 )
 
 enum class TodoStatus {

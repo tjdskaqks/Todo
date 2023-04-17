@@ -3,6 +3,7 @@ package com.brad.todoapi.services
 import com.brad.todoapi.controller.StatusUpdate
 import com.brad.todoapi.models.Todo
 import com.brad.todoapi.models.TodoStatus
+import com.brad.todoapi.models.Users
 import com.brad.todoapi.repository.TodoRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -10,7 +11,7 @@ import java.time.LocalDateTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 @Service
-class TodoService(private val todoRepository: TodoRepository) {
+class TodoService(private val todoRepository: TodoRepository, private val userService: UsersService) {
     fun createTodo (todo: Todo) : Todo = todoRepository.save(todo)
 
     fun getAllTodos(): List<Todo> = todoRepository.findAll()
@@ -44,4 +45,6 @@ class TodoService(private val todoRepository: TodoRepository) {
 
         return todoRepository.save(existingTodo)
     }
+
+    fun getAllTodosByUser(user: Users): List<Todo> = todoRepository.findAllByUser(user)
 }
